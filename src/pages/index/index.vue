@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import store from '@/store'
 import card from '@/components/card'
 import scroll from '@/components/scroll'
 export default {
@@ -128,6 +129,12 @@ export default {
           wx.getUserInfo({
             success: (res) => {
               this.userInfo = res.userInfo
+              // wx.setStorage({
+              //   key:"userInfo",
+              //   data:res.userInfo
+              // })
+              store.state.userInfo.nickName = res.userInfo.nickName
+              store.state.userInfo.avatarUrl = res.userInfo.avatarUrl
             }
           })
         }
