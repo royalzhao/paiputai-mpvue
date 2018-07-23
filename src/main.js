@@ -22,6 +22,7 @@ export default {
       'pages/shopping/main',
       'pages/me/main',
       'pages/order_my/main',
+      'pages/detail/main',
     ],
     window: {
       backgroundTextStyle: 'light',

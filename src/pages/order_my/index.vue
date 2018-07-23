@@ -4,23 +4,23 @@
         <zanTab v-bind="tab" :componentId="'tab'" @change="handleZanTabChange"/>   
         </div>
         <div class="order-list">
-        <div v-if="tab.selectedId === 'all'">
-            <block v-for="num in 10" :key="num">
-            <orderItem></orderItem>
-            </block>
-        </div>
-        <div v-else-if="tab.selectedId === 'obligation'">
-            <div class="zan-btn">待付款</div>
-        </div>
-        <div v-else-if="tab.selectedId === 'overhang'">
-            <div class="zan-btn">待发货</div>
-        </div>
-        <div v-else-if="tab.selectedId === 'wait_receiving'">
-            <div class="zan-btn">待收货</div>
-        </div>
-        <div v-else>
-            <div class="zan-btn zan-btn--loading">评价</div>
-        </div>
+            <div v-if="tab.selectedId === 'all'">
+                <block v-for="num in 10" :key="num">
+                <orderItem></orderItem>
+                </block>
+            </div>
+            <div v-else-if="tab.selectedId === 'obligation'">
+                <div class="zan-btn">待付款</div>
+            </div>
+            <div v-else-if="tab.selectedId === 'overhang'">
+                <div class="zan-btn">待发货</div>
+            </div>
+            <div v-else-if="tab.selectedId === 'wait_receiving'">
+                <div class="zan-btn">待收货</div>
+            </div>
+            <div v-else>
+                <div class="zan-btn zan-btn--loading">评价</div>
+            </div>
         </div>
     </div>
 </template>

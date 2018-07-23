@@ -1,0 +1,49 @@
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both
+}
+
+.animated.infinite {
+  animation-iteration-count: infinite
+}
+
+.animated.hinge {
+  animation-duration: 2s
+}
+
+.animated.bounceIn,.animated.bounceOut,.animated.flipOutX,.animated.flipOutY {
+  animation-duration: .75s
+}
+@keyframes zoomIn {
+  0% {
+      display: inline-block;
+      opacity: 0;
+      transform: scale3d(.3,.3,.3)
+  }
+
+  50% {
+      display: inline-block;
+      opacity: 1
+  }
+}
+.zoomIn {
+  animation-name: zoomIn;
+  display: inline-block !important;
+}
+@keyframes bounceOutRight {
+  20% {
+      opacity: 1;
+      transform: translate3d(-20px,0,0)
+  }
+
+  to {
+      opacity: 0;
+      transform: translate3d(2000px,0,0);
+      display: none;
+  }
+}
+
+.bounceOutRight {
+  animation-name: bounceOutRight;
+  
+}

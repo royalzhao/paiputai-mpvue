@@ -24,13 +24,11 @@
       <div class="line"></div>
     </div>
 
-    <div class="shopList">
-      <ul>
-        <li v-for="item in shops" :key="index">
-          <a :href="'/pages/article/main?id='+item.id"><img :src="item.img" alt=""></a>
-        </li>
-      </ul>
-    </div>
+    <shop-list
+    @handleEnterClick="handleEnterClick"
+    :list="shops"
+    ></shop-list>
+    
   </div>
 </template>
 
@@ -38,6 +36,7 @@
 import store from '@/store'
 import card from '@/components/card'
 import scroll from '@/components/scroll'
+import shopList from '@/components/shopList'
 export default {
   data () {
     return {
@@ -111,7 +110,7 @@ export default {
   },
 
   components: {
-    card,scroll
+    card,scroll,shopList
   },
   created () {
     // 调用应用实例的方法获取全局数据
@@ -122,6 +121,13 @@ export default {
       const url = '../logs/main'
       wx.navigateTo({ url })
     },
+    handleEnterClick (index) {
+      const id = this.shops[index].id
+      wx.navigateTo({
+        url: `../detail/main?id=${id}`
+      })
+    },
+    
     getUserInfo () {
       // 调用登录接口
       wx.login({
@@ -202,19 +208,6 @@ export default {
     background: #cfe2f3;
     z-index: 222;
     margin: 2px 10px;
-  }
-}
-.shopList{
-  ul li{
-    width:100%;
-    a{
-      display: block;
-      width: 100%;
-      img{
-        width:100%;
-        height: 350rpx;
-      }
-    }
   }
 }
 
