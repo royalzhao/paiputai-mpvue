@@ -100,7 +100,12 @@
             <a class="action-bnt__big bnt_mian" @click="togglePopup">立即购买</a>
         </div>
 
-        
+        <!-- popup -->
+        <popup
+        :popupData="popupData"
+        @handleZanStepperChange="handleZanStepperChange"
+        >
+        </popup>
     </div>
 </template>
 <script>
@@ -109,6 +114,9 @@
     import enter from '@/components/mpvue/enter'
     import badge from '@/components/mpvue/badge'
     import capsule from '@/components/mpvue/capsule'
+    import popup from '@/components/mpvue/popup-cart'
+    // 调取后端接口api
+    import { productinfo, productDetails, productAppraise } from '@/api/details'
     export default {
         data(){
             return{
@@ -122,7 +130,12 @@
                 detailsLsit: [],
                 // 评价
                 appraiseList: [],
-                popupData: {},
+                popupData: {
+                    img: 'http://suo.im/5qYDOH',
+                    name:"七匹狼夹克男士外套春装",
+                    price:699,
+                    stock:1
+                },
                 tab1: {
                     list: [{
                         id: 'goods',
@@ -160,15 +173,15 @@
                         onclick: null
                     }
                 ],
-                popupData: {
-                  imgUrl: 'http://suo.im/5qYDOH',
-                  stepper1: {
-                    stepper: 10,
-                    min: 1,
-                    max: 10
-                  },
-                  productinfoList: []
-                },
+                // popupData: {
+                //   imgUrl: 'http://suo.im/5qYDOH',
+                //   stepper1: {
+                //     stepper: 10,
+                //     min: 1,
+                //     max: 10
+                //   },
+                //   productinfoList: []
+                // },
                 slideList: [
                     {img:'http://img.weiye.me/zcimgdir/album/file_5a0e33739bff2.jpg'},
                     {img:'http://img.weiye.me/zcimgdir/album/file_5a0e334da3ad2.jpg'},
@@ -189,15 +202,72 @@
             }
         },
         components: {
-            zanTab,scroll,enter,badge,capsule
+            zanTab,scroll,enter,badge,capsule,popup
         },
         methods:{
             handleZanTabChange (e) {
                 console.log(e)
                 const {componentId, selectedId} = e
                 this[componentId].selectedId = selectedId
+            },
+            togglePopup (tag) {
+                this.skip = !!tag
+                this.showPopup = !this.showPopup
+            },
+            handleZanStepperChange (e) {
+                this.popupData.stepper.stepper = e
+                console.log('master0-0~~', e, this.popupData)
+            },
+            Productinfo () {
+                const postData = JSON.stringify({
+                    id:1,
+                    token:'string'
+                })
+                productinfo(postData)
+                    .then(response=>{
+                        const popup = this.popupData
+                        const data = response.data
+                        console.log(data)
+                        this.productinfoList = data
+                        popup.stepper = {
+                            stepper:1,
+                            min:2,
+                            max:data.stock
+                        }
+                        popup.name = data.name
+                        popup.img = data.attr.color[0].img
+                        popup.price = data.price
+                        popup.stock = data.stock
+                    })
+            },
+            ProductDetails () {
+                const postData = JSON.stringify({
+                    id: 1,
+                    token: 'string'
+                })
+                productDetails(postData)
+                    .then(response => {
+                        this.detailsLsit = response.data
+                    })
+            },
+            ProductAppraise () {
+                const postData = JSON.stringify({
+                    id: this.query.id,
+                    token: 'string'
+                })
+                productAppraise(postData)
+                    .then(response => {
+                        this.appraiseList = response.data
+                    })
             }
-        }
+        },
+        beforeMount () {
+            this.query = this.$root.$mp.query
+            this.capsuleData.onclick = this.handleCapsu
+            this.Productinfo()
+            this.ProductDetails()
+            this.ProductAppraise()
+        },
     }
 </script>
 <style scoped lang="less">
