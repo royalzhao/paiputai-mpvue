@@ -41,7 +41,7 @@
                 </div>
                 <!-- cell -->
                 <div class="zan-panel">
-                    <div class="zan-cell zan-cell--access"  @click="togglePopup(false)">
+                    <div class="zan-cell zan-cell--access"  @click="togglePopup(true)">
                     <div class="zan-cell__bd">选择颜色,尺码</div>
                     <div class="zan-cell__ft"></div>
                     </div>
@@ -97,13 +97,16 @@
                 <span>收藏</span>
             </a> -->
             <a class="action-bnt__big bnt_secondary" @click="togglePopup(false)">加入购物车</a>
-            <a class="action-bnt__big bnt_mian" @click="togglePopup">立即购买</a>
+            <a class="action-bnt__big bnt_mian" @click="togglePopup(true)">立即购买</a>
         </div>
 
         <!-- popup -->
         <popup
         :popupData="popupData"
         @handleZanStepperChange="handleZanStepperChange"
+        @togglePopup="togglePopup"
+        :showPopup="showPopup"
+        :skip="skip"
         >
         </popup>
     </div>
@@ -199,6 +202,8 @@
                     content: '买一送一',
                     borderRadius: 'none'
                 },
+                showPopup: false,
+                skip: true,
             }
         },
         components: {
@@ -206,12 +211,13 @@
         },
         methods:{
             handleZanTabChange (e) {
-                console.log(e)
+                //console.log(e)
                 const {componentId, selectedId} = e
                 this[componentId].selectedId = selectedId
             },
             togglePopup (tag) {
                 this.skip = !!tag
+                
                 this.showPopup = !this.showPopup
             },
             handleZanStepperChange (e) {
@@ -238,6 +244,8 @@
                         popup.img = data.attr.color[0].img
                         popup.price = data.price
                         popup.stock = data.stock
+                        popup.color = data.attr.color
+                        popup.size = data.attr.size
                     })
             },
             ProductDetails () {

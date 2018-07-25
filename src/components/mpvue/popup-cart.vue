@@ -11,25 +11,24 @@
           <span class="text-overflow">{{popupData.name}}</span>
           <em>￥{{popupData.price}}</em>
         </div>
-        <div class="sku">
+        <!-- <div class="sku">
           <div>
-            <span></span>
-            
+            <p>颜色</p>
+            <select-radio v-bind="{ items, checkedValue: checked.color, activeColor, componentId: 'color'}" @handleZanSelectChange="handleZanSelectChange"></select-radio>
           </div>
-        </div>
+        </div> -->
         <div class="popup-footer">
           <div class="footer-left">
-            <span>购买数量</span>
-            <em>剩余{{popupData.stock}}件</em>
+            <span class="zan-font-14">购买数量</span>
+            <em class="zan-font-14">剩余{{popupData.stock}}件</em>
           </div>
-          <stepper
-          v-bind="popupData.stepper"
+          <zan-stepper
           size="small"
-          componentId="stepper"
-          @handleZanStepperChange="handleZanStepperChange"
-          ></stepper>
+          v-bind="stepper1" componentId="stepper1" @handleZanStepperChange="handleZanStepperChange"
+          ></zan-stepper>
         </div>
       </div>
+      
       <button class="zan-btn zan-btn--danger popup-border--none" @click="handleAffirm">{{ skip ? '下一步':'确定' }}</button>
       </div>
     </div>
@@ -38,11 +37,34 @@
 
 <script>
 import store from '@/store'
-import stepper from '@/components/mpvue/stepper'
+import zanStepper from '@/components/mpvue/stepper1'
+import selectRadio from '@/components/mpvue/select'
+import { showToast } from '@/utils/index'
 export default {
   data () {
     return {
-      stepper: {}
+      stepper: {},
+      items: [
+          {
+            value: '1',
+            name: '选项一'
+          },
+          {
+            value: '2',
+            name: '选项二'
+          }
+        ],
+        checked: {
+          base: '-1',
+          color: '-1',
+          form: '-1'
+        },
+        activeColor: '#4b0',
+        stepper1: {
+          stepper: 1,
+          min: 1,
+          max: 20
+        },
     }
   },
   props: {
@@ -50,25 +72,42 @@ export default {
       type: Boolean,
       default: true
     },
+    skip: {
+      type: Boolean
+    },
     popupData: Object
   },
   components: {
-    stepper
+    zanStepper,selectRadio
   },
   methods: {
     togglePopup () {
       this.showPopup = !this.showPopup
       this.$emit('togglePopup', this.showPopup)
     },
+    handleZanSelectChange ({ componentId, value }) {
+      this.checked[componentId] = value
+    },
     handleZanStepperChange (e) {
+      
       const {componentId, stepper} = e
-      this.popupData[componentId].stepper = stepper
-      console.log(this.popupData[componentId].stepper)
-      this.$emit('handleZanStepperChange', componentId, stepper)
+      this[componentId].stepper = stepper
+    },
+    handleAffirm(){
+      if(this.skip){
+        wx.navigateTo({
+          url: `../new_order/main`
+        })
+      }else{
+        showToast('加入购物车成功')
+        this.showPopup = !this.showPopup
+        this.$emit('togglePopup', this.showPopup)
+      }
     }
   },
   mounted () {
     console.log(store.state.details)
+    
   }
 }
 </script>

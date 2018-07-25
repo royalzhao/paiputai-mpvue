@@ -23,6 +23,7 @@ export default {
       'pages/me/main',
       'pages/order_my/main',
       'pages/detail/main',
+      'pages/new_order/main',
     ],
     window: {
       backgroundTextStyle: 'light',
