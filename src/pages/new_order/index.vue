@@ -77,21 +77,21 @@
             合计:<i>￥66</i>
             </span>
         </div>
-        <div class="submit">提交订单</div>
-        </div>
+        <div class="submit" @click="submit">提交订单</div>
     </div>
-    </template>
-    
-    <script>
-    import stepper from '@/components/mpvue/stepper'
-    export default {
+</div>
+</template>
+
+<script>
+import stepper from '@/components/mpvue/stepper'
+export default {
     data () {
         return {
-        stepper1: {
-            stepper: 10,
-            min: 1,
-            max: 10
-        }
+            stepper1: {
+                stepper: 10,
+                min: 1,
+                max: 10
+            }
         }
     },
     components: {
@@ -101,98 +101,103 @@
         handleZanStepperChange (e) {
         const {componentId, stepper} = e
         this[componentId].stepper = stepper
+        },
+        submit(){
+            wx.navigateTo({
+                url: `../new_success/main`
+            })
         }
     }
-    }
-    </script>
-    
-    <style lang="less" scoped>
-    @import url("~@/styles/color.less");
-    .order-adderss{
-    margin:0;
-    border-bottom: 4px solid #00acc1;
-    .order-location{
-        font-weight: bold;
-        font-size: 16px;
-        margin-right: 10px;
-    }
-    .cell__bd___top,.zan-cell__desc{
-        display: flex;
-        justify-content: space-between; 
-        padding-right: 20px;
-    }
-    }
-    .shop-name{
-        padding: 10px;
-        span{
-        margin-right: 10px;
-        font-size: 16px;
-        color: @minColor;
-        }
-    }
-    .commodity-info{
-    background: #f5f5f5;
-    .zan-cell__text{
-        line-height: 18px;
-    }
-    .zan-cell__icon{
-        width: 45px;
-        height: 45px; 
-    }
-    .zan-cell__desc{
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        span{
-        margin: 2px 0;
-        }
-    }
-    .zan-cell__ft{
-        display: flex;
-        flex-direction: column;
-        .money{
-        color: @minColor;
-        font-weight: bold;
-        }
-    }
-    img{
-        width: 100%;
-        height: 100%;
-    } 
-    }
-    .order-footer{
+}
+</script>
+
+<style lang="less" scoped>
+@import url("~@/styles/color.less");
+.order-adderss{
+margin:0;
+border-bottom: 4px solid #00acc1;
+.order-location{
+    font-weight: bold;
+    font-size: 16px;
+    margin-right: 10px;
+}
+.cell__bd___top,.zan-cell__desc{
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 45px;
-    background: #ffffff;
-    width: 100vw;
-    position:fixed;
-    bottom: 0;
-    .footer-left{
-        display: flex;
-        span{
-        display: flex;
-        margin: 0 5px;
-        i{
-            color: @minColor;
-        }
-        }
-        .sum{
-        font-size: 16px;
-        i{
-            font-weight: bold;
-        }
-        }
+    justify-content: space-between; 
+    padding-right: 20px;
+}
+}
+.shop-name{
+    padding: 10px;
+    span{
+    margin-right: 10px;
+    font-size: 16px;
+    color: @minColor;
     }
-    .submit{
-        width: 30vw;
-        background: @bntBackgroundColor;
-        color: #fff;
-        height: 100%;
-        line-height: 45px;
-        text-align: center;
+}
+.commodity-info{
+background: #f5f5f5;
+.zan-cell__text{
+    line-height: 18px;
+}
+.zan-cell__icon{
+    width: 45px;
+    height: 45px; 
+}
+.zan-cell__desc{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    span{
+    margin: 2px 0;
+    }
+}
+.zan-cell__ft{
+    display: flex;
+    flex-direction: column;
+    .money{
+    color: @minColor;
+    font-weight: bold;
+    }
+}
+img{
+    width: 100%;
+    height: 100%;
+} 
+}
+.order-footer{
+display: flex;
+justify-content: flex-end;
+align-items: center;
+height: 45px;
+background: #ffffff;
+width: 100vw;
+position:fixed;
+bottom: 0;
+.footer-left{
+    display: flex;
+    span{
+    display: flex;
+    margin: 0 5px;
+    i{
+        color: @minColor;
     }
     }
-    </style>
+    .sum{
+    font-size: 16px;
+    i{
+        font-weight: bold;
+    }
+    }
+}
+.submit{
+    width: 30vw;
+    background: @bntBackgroundColor;
+    color: #fff;
+    height: 100%;
+    line-height: 45px;
+    text-align: center;
+}
+}
+</style>
       

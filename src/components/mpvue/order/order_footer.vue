@@ -19,7 +19,7 @@
     <block v-if="orderType === 3">
       <button class="zan-btn zan-btn--small">再次购买</button>
       <button class="zan-btn zan-btn--small">查看物流</button>
-      <button class="zan-btn zan-btn--small">评价</button>
+      <button class="zan-btn zan-btn--small" @click="comment">评价</button>
     </block>         
   </div>
 </div>
@@ -30,7 +30,14 @@ export default {
   props: {
     orderType: {
       type: Number,
-      default: 0
+      default: 3
+    }
+  },
+  methods:{
+    comment(){
+      wx.navigateTo({
+        url: `/pages/comment/main`
+      })
     }
   }
 }

@@ -20,6 +20,10 @@ export default {
   -webkit-transition: width 2s;
   -o-transition: width 2s;
 }
+page {
+  /* background: @backgroundColor; */
+  font-size: 14px;
+}
 view{
   box-sizing:border-box !important;
 }

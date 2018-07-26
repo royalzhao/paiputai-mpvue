@@ -24,6 +24,11 @@ export default {
       'pages/order_my/main',
       'pages/detail/main',
       'pages/new_order/main',
+      'pages/new_success/main',
+      'pages/address_select/main',
+      'pages/address/main',
+      'pages/address_admin/main',
+      'pages/comment/main',
     ],
     window: {
       backgroundTextStyle: 'light',

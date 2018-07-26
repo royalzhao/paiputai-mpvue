@@ -151,7 +151,7 @@ export default {
             title: '代完善',
             icon: 'success',
             duration: 2000
-            })
+        })
         
     }
   }

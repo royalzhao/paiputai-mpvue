@@ -30,6 +30,7 @@ import store from '@/store'
 import cardCart from '@/components/shop/cart-shopping-cart'
 import CartAction from '@/components/shop/cart-shopping-action'
 import CartTop from '@/components/shop/cart-shopping-top'
+import { addressList } from '@/api/address'
 export default {
     data(){
         return{
@@ -38,6 +39,42 @@ export default {
     },
     components:{
         cardCart,CartAction,CartTop
+    },
+    onShow () {
+        // 地址显示逻辑
+        const DefaultAddress = wx.getStorageSync('DefaultAddress')
+        const SelectAddress = wx.getStorageSync('SelectAddress')
+        if (SelectAddress) {
+            const address = JSON.parse(SelectAddress)
+            this.address = address.city + address.area
+        } else if (DefaultAddress) {
+            const address = JSON.parse(DefaultAddress)  
+            this.address = address.city + address.area
+        } else {
+            this._addressList()
+        }
+        // 初始化 cart admin
+        store.state.cart.cartAdmin = false
+    },
+    methods:{
+        handleAll (checked) {
+            const list = this.shoppingLsit
+            list.forEach(e => {
+                e.select = checked
+            })
+            store.commit('cart/init', list)
+        },
+        _getShoppingList () {
+            // const postData = JSON.stringify({token: 'string'})
+            // getShoppingList(postData)
+            //     .then(response => {
+            //     const dataList = response.data
+            //     dataList.forEach(e => {
+            //         Object.assign(e, {select: false})
+            //     })
+            //     store.commit('cart/init', dataList)
+            //     })
+        },
     },
     computed: {
         shoppingLsit () {
@@ -67,6 +104,18 @@ export default {
                 return e.select
             })
             return size.length
+        },
+        _addressList () {
+            const postData = JSON.stringify({
+                id: 1,
+                token: 'string'
+            })
+            addressList(postData)
+                .then(response => {
+                    const addressDefault = response.data[0]
+                    this.address = addressDefault.city + addressDefault.area
+                    wx.setStorageSync('DefaultAddress', JSON.stringify(addressDefault))
+                })
         }
     }
 }
